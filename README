@@ -1,1 +1,12 @@
 longlines lists lines in a text file that are too long.
+
+To install from source:-
+
+    ./configure                     # generate makefiles
+    make                            # build
+    sudo make install               # install
+
+To install from a git checkout instead of a source tarball, you'll need to run
+autotools to generate the configure script, etc:-
+
+    autoreconf --install            # install build system
