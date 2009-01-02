@@ -30,7 +30,7 @@ const string SYNTAX =
 
 const string HELP = SYNTAX + "\n"
     "-n : show line numbers\n"
-    "-w : set threshole\n"
+    "-w : set threshold\n"
     "-t : set width for tab expansion\n";
     
 
