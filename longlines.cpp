@@ -29,10 +29,10 @@ const string SYNTAX =
     "Usage: %{command} -n -w <width> -t <tab size> [files]";
 
 const string HELP = SYNTAX + "\n"
-	"-n : show line numbers\n"
-	"-w : set threshole\n"
-	"-t : set width for tab expansion\n";
-	
+    "-n : show line numbers\n"
+    "-w : set threshole\n"
+    "-t : set width for tab expansion\n";
+    
 
 const int DEFAULT_MAX = 78;
 const int DEFAULT_TAB_WIDTH = 4;
@@ -47,146 +47,146 @@ list<string> filenames;
 
 int main(int argc, char** argv)
 {
-	string arg;
+    string arg;
 
-	arg = *argv;
+    arg = *argv;
 
-	string syntax = replacetag(SYNTAX, "command", arg);
-	string help = replacetag(HELP, "command", arg);
+    string syntax = replacetag(SYNTAX, "command", arg);
+    string help = replacetag(HELP, "command", arg);
 
-	argv++;
-	argc--;
+    argv++;
+    argc--;
 
-	while (argc)
-	{
-		arg = *argv;
+    while (argc)
+    {
+        arg = *argv;
 
-    	argv++;
-		argc--;
+        argv++;
+        argc--;
 
-        if (arg == "-w")	// width
-		{
+        if (arg == "-w")    // width
+        {
 
-			if (!argc)
-			{
-				cerr << syntax << "\n";
-				return 2;
-			}
+            if (!argc)
+            {
+                cerr << syntax << "\n";
+                return 2;
+            }
 
-			max_line = atoi(*argv);
-			argv++;
-			argc--;
-		}
+            max_line = atoi(*argv);
+            argv++;
+            argc--;
+        }
 
-		else if (arg == "-t")	// tab width
-		{
-			if (!argc)
-			{
-				cerr << syntax << "\n";
-				return 2;
-			}
+        else if (arg == "-t")   // tab width
+        {
+            if (!argc)
+            {
+                cerr << syntax << "\n";
+                return 2;
+            }
 
-			tab_width = atoi(*argv);
-			argv++;
-			argc--;
-		}
+            tab_width = atoi(*argv);
+            argv++;
+            argc--;
+        }
 
-		else if (arg == "-n")	// show line numbers
-		{
-			show_line_numbers = true;
-		}
+        else if (arg == "-n")   // show line numbers
+        {
+            show_line_numbers = true;
+        }
 
-		else if (arg == "-h")	// help
-		{
-			cout << help << "\n";
-			return 0;
-		}
+        else if (arg == "-h")   // help
+        {
+            cout << help << "\n";
+            return 0;
+        }
 
-		else if (arg[0] == '-')	// unknown switch
-		{
-			cerr << syntax << "\n";
-			return 2;
-		}
+        else if (arg[0] == '-') // unknown switch
+        {
+            cerr << syntax << "\n";
+            return 2;
+        }
 
-		else
-			filenames.insert(filenames.end(), arg);
-	}
+        else
+            filenames.insert(filenames.end(), arg);
+    }
 
-	if (!filenames.size() )
-	{
-		cerr << syntax << "\n";
-		return 2;
-	}
+    if (!filenames.size() )
+    {
+        cerr << syntax << "\n";
+        return 2;
+    }
 
-	list<string>::iterator i = filenames.begin();
+    list<string>::iterator i = filenames.begin();
 
-	string buf = "";
-	int count = 0;
+    string buf = "";
+    int count = 0;
 
-	while (i != filenames.end() )
-	{
-		string filename = *i;
-		int lineno = 0;
+    while (i != filenames.end() )
+    {
+        string filename = *i;
+        int lineno = 0;
 
-		char chr = '\0';
-		int col = 0;
+        char chr = '\0';
+        int col = 0;
 
-		ifstream file;
-		file.open(filename.c_str() );
+        ifstream file;
+        file.open(filename.c_str() );
 
-		while (!file.eof() )
-		{
-			file.read(&chr,1);
+        while (!file.eof() )
+        {
+            file.read(&chr,1);
 
-			if (chr == '\t')
-			{
-				buf += " ";
-				col++;
-				while (col % tab_width)
-				{
-					buf += " ";
-					col++;
-				}
-			}
+            if (chr == '\t')
+            {
+                buf += " ";
+                col++;
+                while (col % tab_width)
+                {
+                    buf += " ";
+                    col++;
+                }
+            }
 
-			else if (chr == '\n')
-			{
-				lineno++;
-				if (col > max_line)
-				{
-					cout << filename << ":";
+            else if (chr == '\n')
+            {
+                lineno++;
+                if (col > max_line)
+                {
+                    cout << filename << ":";
 
-					if (show_line_numbers)
-						cout << lineno << ":";
-				
-					cout << buf << "\n";
+                    if (show_line_numbers)
+                        cout << lineno << ":";
+                
+                    cout << buf << "\n";
 
-					count++;
-				}
+                    count++;
+                }
 
-				col = 0;
-				buf = "";
+                col = 0;
+                buf = "";
 
-			}
+            }
 
-			else
-			{
-				buf += chr;
-				col++;
-			}
-		}
+            else
+            {
+                buf += chr;
+                col++;
+            }
+        }
 
-		i++;
-	}
+        i++;
+    }
 
-	return count == 0;
+    return count == 0;
 }
 
 
 string replacetag(const string src, const string tag, const string value)
 {
-	int strpos = src.find("%{" + tag + "}");
+    int strpos = src.find("%{" + tag + "}");
 
-	return src.substr(0, strpos) + value
-		+ src.substr(strpos + tag.length() + 3, src.length() - strpos - 2);
+    return src.substr(0, strpos) + value
+        + src.substr(strpos + tag.length() + 3, src.length() - strpos - 2);
 }
