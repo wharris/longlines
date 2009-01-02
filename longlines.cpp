@@ -1,6 +1,6 @@
 /*
  * longlines - list long lines in a text file.
- * Copyright (C) 2008  Will Harris
+ * Copyright (C) 2001-2009  Will Harris
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
