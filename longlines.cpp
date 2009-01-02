@@ -37,7 +37,7 @@ const string HELP = SYNTAX + "\n"
 const int DEFAULT_MAX = 78;
 const int DEFAULT_TAB_WIDTH = 4;
 
-int max = DEFAULT_MAX;
+int max_line = DEFAULT_MAX;
 int tab_width = DEFAULT_TAB_WIDTH;
 bool show_line_numbers = false;
 
@@ -73,7 +73,7 @@ int main(int argc, char** argv)
 				return 2;
 			}
 
-			max = atoi(*argv);
+			max_line = atoi(*argv);
 			argv++;
 			argc--;
 		}
@@ -152,7 +152,7 @@ int main(int argc, char** argv)
 			else if (chr == '\n')
 			{
 				lineno++;
-				if (col > max)
+				if (col > max_line)
 				{
 					cout << filename << ":";
 
